@@ -5,14 +5,33 @@ import pickle
 import gensim.downloader
 
 app = Flask(__name__)
+# Function to load GloVe embeddings from a file
+def load_glove_embeddings(path):
+    """
+    Load GloVe embeddings from a file into a dictionary.
+    
+    Parameters:
+    path (str): Path to the GloVe embeddings file.
+    
+    Returns:
+    dict: A dictionary mapping words to their embedding vectors.
+    """
+    embeddings_dict = {}
+    with open(path, 'r', encoding='utf-8') as f:
+        for line in f:
+            values = line.split()
+            word = values[0]
+            vector = np.asarray(values[1:], "float32")
+            embeddings_dict[word] = vector
+    return embeddings_dict
 
 # Load the pre-trained model
-with open('model.pkl', 'rb') as f:
+with open('model_200.pkl', 'rb') as f:
     model = pickle.load(f)
 
 # Load GloVe vectors
-glove_vectors = gensim.downloader.load('glove-twitter-25')
-embedding_dim = 25  # Dimensionality of the GloVe vectors you're using
+glove_vectors = load_glove_embeddings('glove.twitter.27B.200d.txt')
+embedding_dim = 200  # Dimensionality of the GloVe vectors you're using
 
 @app.route('/')
 
