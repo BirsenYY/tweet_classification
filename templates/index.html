@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tweet Classifier</title>
+</head>
+<body>
+    <h2>Tweet Classification</h2>
+    <form action="{{ url_for('classify_tweet') }}" method="post">
+        <textarea name="tweet" rows="4" cols="50" placeholder="Enter tweet here..."></textarea>
+        <br>
+        <button type="submit">Classify Tweet</button>
+    </form>
+    {% if prediction_text %}
+        <h3>{{ prediction_text }}</h3>
+    {% endif %}
+</body>
+</html>
